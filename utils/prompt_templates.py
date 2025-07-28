@@ -1,6 +1,6 @@
 import os
 
-# 風格中→英文對照（可擴充至 13 種）
+# 風格中→英文對照（可依你的13種需求擴充）
 STYLE_EN_MAP = {
     "北歐風": "Scandinavian style",
     "工業風": "Industrial style",
@@ -12,12 +12,11 @@ STYLE_EN_MAP = {
     "日式禪風": "Zen Japanese style",
     "日式無印風": "MUJI Japanese style",
     "古典風": "Classical style",
-    "新古典風": "Neo-classical style",
+    "新古典風格": "Neo-classical style",
     "地中海風": "Mediterranean style",
     "美式風": "American style",
 }
 
-# 中文色名→英文色名對照（常見色系，可擴充）
 COLOR_EN_MAP = {
     "白": "white", "奶油白": "cream white", "灰": "gray", "藍": "blue",
     "金": "gold", "米灰": "beige", "木色": "wood", "淺藍": "light blue",
@@ -29,7 +28,6 @@ COLOR_EN_MAP = {
 def cn_color_to_en(color_str):
     """將中文色系描述轉為英文，用英文逗號分隔"""
     result = color_str
-    # 先用長字→短字排序替換，避免短字取代長色名
     color_items = sorted(COLOR_EN_MAP.items(), key=lambda x: -len(x[0]))
     for cn, en in color_items:
         result = result.replace(cn, en)
@@ -37,11 +35,13 @@ def cn_color_to_en(color_str):
     return result
 
 def load_styles():
-    """解析 styles.txt 取得風格中文名稱與10字內簡介（供前端用）"""
+    """解析 styles.txt，跳過#註解，取得風格中文名稱與簡介（供前端用）"""
     styles = []
     with open('styles.txt', encoding='utf-8') as f:
         block = []
         for line in f:
+            if line.strip().startswith("#"):
+                continue  # 跳過註解行
             if line.startswith('*'):
                 if block:
                     styles.append(''.join(block))
@@ -105,3 +105,4 @@ Style description: {style_desc}
 Output a single interior design image with the above constraints.
 """
     return prompt.strip()
+
