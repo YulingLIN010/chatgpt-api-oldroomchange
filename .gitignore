@@ -1,5 +1,8 @@
 *.pyc
 __pycache__/
 .env
-static/uploads/
-static/output/
+static/uploads/*
+!static/uploads/.gitkeep
+
+static/output/*
+!static/output/.gitkeep
