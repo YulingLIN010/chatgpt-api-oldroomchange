@@ -1,8 +1,10 @@
 import openai
 import os
 
-# 請確保你在 Render 或本地有設 OPENAI_API_KEY 環境變數
-openai.api_key = os.getenv("OPENAI_API_KEY")
+api_key = os.getenv("OPENAI_API_KEY")
+if not api_key:
+    raise Exception("OpenAI API key not set. 請在環境變數設 OPENAI_API_KEY")
+openai.api_key = api_key
 
 def generate_image(prompt):
     """
@@ -17,3 +19,4 @@ def generate_image(prompt):
     )
     img_url = response.data[0].url
     return img_url
+
